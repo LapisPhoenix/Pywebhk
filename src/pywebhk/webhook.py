@@ -2,6 +2,7 @@
 # from os import PathLike
 # from os.path import basename
 from requests import post
+from requests.exceptions import RequestException
 from .ext.errors import NotAnURL, DeadWebhook, UnsupportedImageType
 from .ext.url import URLHandler
 from .embed import Embed
@@ -90,8 +91,9 @@ class Webhook:
 		
 		# pprint.pprint(payload)
 		
-		response = post(self.webhook_url, json=payload)
-		# pprint.pprint(response)
-		
-		if response.status_code != 204:
-			raise Exception("Webhook request failed with status code:", response.status_code)
+		try:
+			response = post(self.webhook_url, json=payload)
+			if response.status_code != 204:
+				raise Exception("Webhook request failed with status code:", response.status_code)
+		except RequestException as e:
+			print("Webhook request failed:", e)

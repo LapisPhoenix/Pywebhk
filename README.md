@@ -48,7 +48,7 @@ except Exception as e:
 
 # TODO
 - Add File Support
-- Some Error Handling
+- ~~Some Error Handling~~ **Done**
 - ~~Minor Documentation~~ **Done**
 
 # License

@@ -52,11 +52,23 @@ class Embed:
 		self.json.update(to_add)
 	
 	def add_field(self, name: str, value: str, inline: bool = True):
+		"""
+		Add a field to an embed. 25 Field Limit!
+		:param name: Field Name
+		:param value: Field Content
+		:param inline:
+		:return:
+		"""
 		if "fields" not in self.json:
 			self.json["fields"] = []
 		self.json["fields"].append({"name": name, "value": value, "inline": inline})
 	
 	def add_image(self, image_url: str):
+		"""
+		Add an image to the embed
+		:param image_url:
+		:return:
+		"""
 		if not URLHandler.is_url(image_url):
 			raise NotAnURL(f"Invalid URL: {image_url}")
 		
@@ -70,6 +82,11 @@ class Embed:
 		self.json["image"]["url"] = image_url
 	
 	def set_thumbnail(self, image_url):
+		"""
+		Set the embed thumbnail
+		:param image_url:
+		:return:
+		"""
 		if not URLHandler.is_url(image_url):
 			raise NotAnURL(f"Invalid URL: {image_url}")
 		
@@ -84,6 +101,12 @@ class Embed:
 		self.json["thumbnail"]["url"] = image_url
 	
 	def set_footer(self, text: str, icon_url: str = None):
+		"""
+		Set the footer of the embed
+		:param text: Author Text
+		:param icon_url: Author Icon
+		:return:
+		"""
 		if "footer" not in self.json:
 			self.json["footer"] = {}
 		
@@ -102,7 +125,15 @@ class Embed:
 		self.json["footer"]["text"] = text
 	
 	def set_timestamp(self, timestamp: str):
+		"""
+		Set the timestamp of the embed.
+		:param timestamp: FORMAT: YYYY-MM-DDTHH:MM:SS.SSSZ
+		:return:
+		"""
 		regex = compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 		
-		if match(regex, timestamp):
-			self.json["timestamp"] = timestamp
+		try:
+			if match(regex, timestamp):
+				self.json["timestamp"] = timestamp
+		except TypeError:
+			raise ValueError("Invalid timestamp format")
