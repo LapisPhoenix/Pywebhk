@@ -49,7 +49,7 @@ except Exception as e:
 # TODO
 - Add File Support
 - Some Error Handling
-- Minor Documentation
+- ~~Minor Documentation~~ **Done**
 
 # License
 This project is licensed under the [__MIT License__](LICENSE).

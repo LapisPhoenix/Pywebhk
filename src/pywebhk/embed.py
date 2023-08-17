@@ -1,6 +1,6 @@
 from re import compile, match
-from ext.url import URLHandler
-from ext.errors import NotAnURL, UnsupportedImageType
+from .ext.url import URLHandler
+from .ext.errors import NotAnURL, UnsupportedImageType
 
 
 class Embed:

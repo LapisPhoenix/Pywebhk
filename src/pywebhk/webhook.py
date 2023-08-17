@@ -2,9 +2,9 @@
 # from os import PathLike
 # from os.path import basename
 from requests import post
-from ext.errors import NotAnURL, DeadWebhook, UnsupportedImageType
-from ext.url import URLHandler
-from embed import Embed
+from .ext.errors import NotAnURL, DeadWebhook, UnsupportedImageType
+from .ext.url import URLHandler
+from .embed import Embed
 
 
 class Webhook:
@@ -64,12 +64,21 @@ class Webhook:
 	# 		self._file_part = {'file': (file_name, contents)}
 	
 	def add_embed(self, embed: Embed):
+		"""
+		Add a embed to the message. 10 Embed limit per message!
+		:param embed: Embed Class
+		:return:
+		"""
 		if len(self._embeds) < 10:  # Discord supports up to 10 embeds per message
 			self._embeds.append(embed.json)
 		else:
 			raise ValueError("Maximum number of embeds (10) reached for this message.")
 	
 	def send(self):
+		"""
+		Send the webhook message
+		:return:
+		"""
 		# We need to construct the final payload
 		payload = {}
 		
