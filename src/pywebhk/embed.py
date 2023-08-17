@@ -11,12 +11,17 @@ class Embed:
 		:param description: Embed Description
 		:param color: Embed Color
 		"""
+		if len(title) > 256:
+			raise OverflowError("Embed title can only be 256 characters long")
+		if len(description) > 4096:
+			raise OverflowError("Embed description can only be 4096 characters long")
+		
 		self.json = {
 			"title": title,
 			"description": description,
 			"color": color,
 		}
-		
+
 		self.title = title
 		self.description = description
 		self.color = color
