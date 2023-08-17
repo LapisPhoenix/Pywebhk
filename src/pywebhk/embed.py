@@ -29,6 +29,9 @@ class Embed:
 		:param icon_url: Icon URL
 		:return:
 		"""
+		if len(name) > 256:
+			raise OverflowError("Author name can only be 256 characters long!")
+		
 		to_add = {"author": {"name": name}}
 		
 		if url is not None:
@@ -59,8 +62,17 @@ class Embed:
 		:param inline:
 		:return:
 		"""
+		if len(name) > 256:
+			raise OverflowError("Field name can only be 256 characters long!")
+		if len(value) > 1024:
+			raise OverflowError("Field value can only be 1024 characters long!")
+		
 		if "fields" not in self.json:
 			self.json["fields"] = []
+		
+		if len(self.json["fields"]) >= 25:
+			raise OverflowError("A embed can only have 25 fields")
+		
 		self.json["fields"].append({"name": name, "value": value, "inline": inline})
 	
 	def add_image(self, image_url: str):
@@ -121,6 +133,9 @@ class Embed:
 				)
 			
 			self.json["footer"]["icon_url"] = icon_url
+		
+		if len(text) > 2048:
+			raise OverflowError("Footer Length can only be 2048 characters long!")
 		
 		self.json["footer"]["text"] = text
 	
